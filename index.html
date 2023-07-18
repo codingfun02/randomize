@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+      }
+
+      .card {
+        width: 150px;
+        height: 100px;
+        background-color: #f2f2f2;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-title {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .card-description {
+        font-size: 14px;
+      }
+
+      .button-container {
+        display: flex;
+        justify-content: flex-end;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="button-container">
+      <button id="randomButton">Randomize</button>
+    </div>
+    <div id="wordCards" class="card-container"></div>
+
+    <script>
+      const words = [
+        "자동차",
+        "스마트폰",
+        "컴퓨터",
+        "노트북",
+        "태블릿",
+        "카메라",
+        "TV",
+        "스피커",
+        "가전제품",
+        "세탁기",
+        "냉장고",
+        "에어컨",
+        "전자레인지",
+        "오븐",
+        "건조기",
+        "청소기",
+        "로봇청소기",
+        "전동드릴",
+        "커피머신",
+        "주방용품",
+        "조리도구",
+        "식기류",
+        "주방가전",
+        "보안시스템",
+        "스마트홈",
+        "전자제품",
+        "자전거",
+        "모터사이클",
+        "헬멧",
+        "조명",
+        "전구",
+        "전기차",
+        "충전기",
+        "배터리",
+        "태양광",
+        "풍력발전",
+        "에너지절약",
+        "리모델링",
+        "건축",
+        "가구",
+        "소파",
+        "테이블",
+        "의자",
+        "침대",
+        "수납장",
+        "선반",
+        "옷장",
+        "식탁",
+        "서랍장",
+        "책상",
+        "참고자료",
+        "의료기기",
+        "치과",
+        "안경",
+        "의약품",
+        "교육도구",
+        "체육관",
+        "스포츠용품",
+        "액세서리",
+        "시계",
+        "지갑",
+        "휴대폰",
+        "악세사리",
+        "교육용 보드게임",
+        "교육용 애완동물",
+        "사료",
+        "등산용품",
+        "캠핑용품",
+        "골프용품",
+        "테니스용품",
+        "수영용품",
+        "캐리어",
+        "가방",
+        "신발",
+        "교육용 의류",
+        "화장품",
+        "교육용 식품",
+        "건강식품",
+        "음료",
+        "주류",
+        "캔디",
+        "초콜릿",
+        "다이어트",
+        "운동",
+        "체형관리",
+        "건강검진",
+        "선글라스",
+        "피트니스",
+        "건강",
+        "교육용 장비",
+        "병원",
+        "약국",
+        "의사",
+        "문구류",
+        "사무용품",
+        "가방",
+        "플래너",
+        "전자기기",
+        "프린터",
+        "복사기",
+        "소프트웨어",
+        "서버",
+        "소셜미디어",
+        "커뮤니케이션",
+        "메신저",
+        "SNS",
+        "뉴스",
+        "방송",
+        "신문",
+        "잡지",
+        "라디오",
+        "텔레비전",
+        "영화",
+        "예술",
+        "문화",
+        "미술",
+        "음악",
+        "연극",
+        "문학",
+        "스포츠",
+        "여행",
+        "문화",
+        "역사",
+        "명소",
+        "호텔",
+        "레저",
+        "결혼",
+        "가정",
+        "대인관계",
+        "에너지효율",
+        "스마트시티",
+        "공공교통",
+        "환경보호",
+        "효율적자원사용",
+        "문제해결",
+        "기술혁신",
+        "비즈니스전략",
+        "리더십",
+        "도전정신",
+        "창의적사고",
+        "역량개발",
+        "지식확산",
+        "스마트가전",
+        "자동화시스템",
+        "디지털기술",
+        "모바일애플리케이션",
+        "인터넷서비스",
+        "네트워크시스템",
+        "하드웨어설비",
+        "개발도구",
+        "프로그래밍언어",
+        "웹애플리케이션",
+        "클라우드서비스",
+        "데이터분석",
+        "예측모델",
+        "인공지능기술",
+        "기계학습",
+        "딥러닝",
+        "자연어처리",
+        "컴퓨터비전",
+        "사물인터넷",
+        "스마트그리드",
+        "가상현실기술",
+        "블록체인기술",
+        "사이버보안",
+        "네트워크프로토콜",
+        "개인정보보호",
+        "플랫폼",
+      ];
+
+      const wordCardsContainer = document.getElementById("wordCards");
+      const randomButton = document.getElementById("randomButton");
+
+      randomButton.addEventListener("click", () => {
+        removeAllCards();
+        const randomWords = getRandomWords(3);
+        randomWords.forEach((word) => {
+          const card = document.createElement("div");
+          card.classList.add("card");
+
+          const title = document.createElement("h3");
+          title.classList.add("card-title");
+          title.textContent = word;
+
+          card.appendChild(title);
+          wordCardsContainer.appendChild(card);
+        });
+      });
+
+      function removeAllCards() {
+        while (wordCardsContainer.firstChild) {
+          wordCardsContainer.removeChild(wordCardsContainer.firstChild);
+        }
+      }
+
+      function getRandomWords(num) {
+        const shuffledWords = words.sort(() => Math.random() - 0.5);
+        return shuffledWords.slice(0, num);
+      }
+    </script>
+  </body>
+</html>
